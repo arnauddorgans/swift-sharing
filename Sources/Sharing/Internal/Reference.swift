@@ -654,12 +654,8 @@ struct _MapReferenceWritableKeyPathMapper<Base, Value, Path>: _MapReferenceWrita
   }
 }
 
-final class _MapReferenceBlockMapper<Base, Value>: _MapReferenceMapper {
+struct _MapReferenceBlockMapper<Base, Value>: _MapReferenceMapper {
   let body: @Sendable (Base) -> Value
-  
-  init(body: @escaping @Sendable (Base) -> Value) {
-    self.body = body
-  }
     
   func transform(_ base: Base) -> Value {
     body(base)
