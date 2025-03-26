@@ -613,7 +613,7 @@ where Base: MutableReference, Mapper: _MapReferenceWritableMapper<Base.Value, Va
   }
 }
 
-protocol _MapReferenceMapper<Base, Value>: Sendable, Equatable {
+protocol _MapReferenceMapper<Base, Value>: Sendable {
   associatedtype Base
   associatedtype Value
       
@@ -622,7 +622,7 @@ protocol _MapReferenceMapper<Base, Value>: Sendable, Equatable {
   func description(baseDescription: String) -> String
 }
 
-protocol _MapReferenceWritableMapper<Base, Value>: _MapReferenceMapper {
+protocol _MapReferenceWritableMapper<Base, Value>: _MapReferenceMapper, Equatable {
   func mutate<R>(_ base: inout Base, body: (inout Value) throws -> R) rethrows -> R
 }
 
@@ -667,10 +667,6 @@ final class _MapReferenceBlockMapper<Base, Value>: _MapReferenceMapper {
   
   func description(baseDescription: String) -> String {
     ".map(\(baseDescription), as: \(Value.self).self)"
-  }
-  
-  static func == (lhs: _MapReferenceBlockMapper, rhs: _MapReferenceBlockMapper) -> Bool {
-    lhs === rhs
   }
 }
 
